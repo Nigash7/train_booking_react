@@ -46,7 +46,7 @@ function Signup() {
   }
 
   return (
-    <div className="  container d-flex justify-content-center align-items-center vh-100 bg-light">
+    <div className="  container d-flex justify-content-center align-items-center vh-100 ">
       <div
         className="card  col-12  shadow-sm p-4"
         style={{ width: "400px", borderRadius: "15px" }}
@@ -162,13 +162,20 @@ function Signup() {
               />
             </div>
           </div>
-
-          <button
-            type="submit"
-            className="btn btn-primary w-100 mt-2 fw-semibold"
+          <div
+            style={{
+              display: "flex",
+              alignItems: "end",
+              justifyContent: "end",
+            }}
           >
-            Sign Up
-          </button>
+            <button
+              type="submit"
+              className="btn btn-primary w-100 mt-2 fw-semibold col-12 col-lg-4"
+            >
+              Sign Up
+            </button>
+          </div>
 
           <p className="text-center mt-3">
             Already have an account?{" "}

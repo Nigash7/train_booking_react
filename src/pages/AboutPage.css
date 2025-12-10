@@ -1,0 +1,35 @@
+.about-header {
+  background: #f5faff;
+}
+
+.about-img {
+  width: 90%;
+  max-width: 450px;
+}
+
+.feature-card {
+  background: #fff;
+  border-radius: 12px;
+  transition: all 0.3s ease;
+}
+
+.feature-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0px 6px 25px rgba(0, 0, 0, 0.1);
+}
+#back{
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    background: rgb(210, 231, 245);
+    border: none;
+    font-size: 2rem;
+    cursor: pointer;
+    border-radius: 20%;
+   color: black;
+    font-style: normal;
+    text-decoration: none;
+    position: fixed;
+    z-index: 1000;
+
+}

@@ -9,15 +9,17 @@ function Home2() {
   const [error, setError] = useState("");
   const [from, setFrom] = useState("");
   const [to, setTo] = useState("");
+  const [date, setDate] = useState("");
 
+  // train data fetching
   useEffect(() => {
     const token = localStorage.getItem("token");
 
     if (!token) {
-      window.location.href = "/login";
+      window.location.href = "/login"; //checking token
       return;
     }
-
+    //fetching train data from api
     axios
       .get("http://127.0.0.1:8000/api/trains/", {
         headers: {
@@ -25,7 +27,7 @@ function Home2() {
         },
       })
       .then((response) => {
-        const sortedData = response.data.sort((a, b) => b.id - a.id);
+        const sortedData = response.data.sort((a, b) => b.id - a.id); //sort by id descending
         setTrains(sortedData);
         setFilteredTrains(sortedData);
         setLoading(false);
@@ -36,7 +38,7 @@ function Home2() {
         setLoading(false);
       });
   }, []);
-
+  //search functionality
   const handleSearch = () => {
     let results = trains;
 
@@ -46,10 +48,15 @@ function Home2() {
       );
     }
 
-    if (to.trim() !== "") {
-      results = results.filter((t) =>
-        t.to_place.toLowerCase().includes(to.toLowerCase())
-      );
+    if (date.trim() !== "") {
+      results = results.filter((t) => {
+        // convert datetime "2025-12-14T01:00:00Z" → "2025-12-14"
+        const trainDate = t.departure_time.split("T")[0];
+        return trainDate === date;
+      });
+    }
+    if (date.trim() !== "") {
+      results = results.filter((t) => t.departure_time);
     }
 
     setFilteredTrains(results);
@@ -57,6 +64,7 @@ function Home2() {
   const handleRefresh = () => {
     setFrom("");
     setTo("");
+    setDate("");
     setFilteredTrains(trains); // Show all trains again
   };
 
@@ -68,11 +76,12 @@ function Home2() {
       <Navebar />
 
       <div className="container mt-5">
-        <h2 className="text-center fw-bold mb-4">Search Trains</h2>
-
         {/* Search Form */}
-        <div className="card shadow-sm p-4 mb-5">
-          <div className="row g-3">
+        <div
+          className="card shadow-sm p-4 mb-5  "
+          style={{ marginTop: "100px" }}
+        >
+          <div className="row g-3 ">
             <div className="col-md-5">
               <label className="form-label">From</label>
               <input
@@ -92,6 +101,15 @@ function Home2() {
                 placeholder="Enter destination"
                 value={to}
                 onChange={(e) => setTo(e.target.value)}
+              />
+            </div>
+            <div className="col-md-5">
+              <label className="form-label">Date</label>
+              <input
+                type="date"
+                className="form-control"
+                value={date}
+                onChange={(e) => setDate(e.target.value)}
               />
             </div>
 
@@ -145,6 +163,9 @@ function Home2() {
                   <p>
                     <strong>Arrival:</strong> {train.arrival_time}
                   </p>
+                  <p>
+                    <strong>Train running Date: </strong> running all days
+                  </p>
 
                   <h5 className="text-primary fw-bold mt-3">
                     ₹ {train.ticket_price}
@@ -157,11 +178,30 @@ function Home2() {
                     </strong>
                   </p>
 
-                  <button
+                  {/* <button
                     className="btn btn-primary w-100 mt-3"
                     onClick={() => (window.location.href = `/book/${train.id}`)}
                   >
                     Book Now
+                  </button> */}
+                  <button
+                    className={`btn w-100 mt-3 ${
+                      train.is_active && train.available_seats > 0
+                        ? "btn-primary"
+                        : "btn-secondary"
+                    }`}
+                    disabled={!train.is_active || train.available_seats === 0}
+                    onClick={() =>
+                      train.is_active &&
+                      train.available_seats > 0 &&
+                      (window.location.href = `/book/${train.id}`)
+                    }
+                  >
+                    {train.is_active
+                      ? train.available_seats > 0
+                        ? "Book Now"
+                        : "No Seats"
+                      : "Not Available"}
                   </button>
                 </div>
               </div>

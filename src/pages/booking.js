@@ -14,6 +14,7 @@ function BookingPage() {
   const [passengerAge, setPassengerAge] = useState("");
   const [passengerGender, setPassengerGender] = useState("");
   const [seats, setSeats] = useState(1);
+  // const [date, setDate] = useState("");
 
   const [message, setMessage] = useState("");
 
@@ -54,6 +55,7 @@ function BookingPage() {
           passenger_name: passengerName,
           passenger_age: Number(passengerAge),
           passenger_gender: passengerGender,
+          booking_date: new Date().toISOString().split("T")[0], // current date
         },
         {
           headers: {
@@ -147,6 +149,15 @@ function BookingPage() {
               min="1"
             />
           </div>
+          {/* <div className="mb-3">
+            <label className="form-label">Date</label>
+            <input
+              type="date"
+              className="form-control"
+              value={date}
+              onChange={(e) => setDate(e.target.value)}
+            />
+          </div> */}
 
           <button className="btn btn-primary w-100" onClick={handleBooking}>
             Confirm Booking

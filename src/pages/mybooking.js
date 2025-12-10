@@ -60,7 +60,9 @@ function MyBookings() {
     <div>
       <Navebar />
       <div className="container mt-4">
-        <h2 className="fw-bold text-center mb-4">My Bookings</h2>
+        <h2 className="fw-bold text-center mb-4" style={{ marginTop: "100px" }}>
+          My Bookings
+        </h2>
 
         {bookings.length === 0 ? (
           <h4 className="text-center text-muted">No bookings found</h4>
@@ -71,6 +73,9 @@ function MyBookings() {
               <p>
                 <strong>Booking ID:</strong> {booking.booking_id}
               </p>
+              {/* <p>
+                <strong>booking date</strong> {departure_time}
+              </p> */}
               <p>
                 <strong>Passenger:</strong> {booking.passenger_name} (
                 {booking.passenger_gender}, {booking.passenger_age})
@@ -82,7 +87,12 @@ function MyBookings() {
                 <strong>Total Price:</strong> ₹{booking.total_price}
               </p>
               <p>
-                <strong>Date:</strong> {booking.booking_date}
+                <strong>booking Date:</strong>{" "}
+                {booking.booking_date.substring(0, 10)}
+              </p>
+              <p>
+                <strong>Traveling Date:</strong>{" "}
+                {booking.travel_datetime.substring(0, 10)}
               </p>
               <button
                 className="btn btn-success mt-2"

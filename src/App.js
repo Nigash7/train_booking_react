@@ -11,6 +11,7 @@ import Booking from "./pages/booking";
 import Profile from "./pages/profile";
 import EditProfile from "./pages/edit_profile";
 import Mybooking from "./pages/mybooking";
+import AboutPage from "./pages/aboutUs";
 // import BookingPage from "./pages/bookingPage.js";
 
 function App() {
@@ -26,6 +27,7 @@ function App() {
       <Route path="/profile" element={<Profile />} />
       <Route path="edit_profile/" element={<EditProfile />} />
       <Route path="/mybooking" element={<Mybooking />} />
+      <Route path="/about" element={<AboutPage />} />
       {/* <Route path="/book/:id" element={<BookingPage />} /> */}
     </Routes>
   );
